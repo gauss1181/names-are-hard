@@ -11,10 +11,10 @@
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		<link href="{{ url_for('static', filename='styles/styles.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <link href="{{ url_for('static', filename='styles/styles.css') }}" rel="stylesheet">
   <script>
   window.course_list = [];
   $(function() {
@@ -32,9 +32,21 @@
     $( "#add-course-button" ).click(function() {
       course_name = $("#add-course-text").val();
       if (window.course_list.indexOf(course_name) === -1) {
+        if (window.course_list.length === 0) {
+          $("#clear-all-button-div").append('<button type="button" class="btn btn-default" id="clear-all-button">Clear All</button>');
+
+          $(function() {
+            $( "#clear-all-button" ).click(function() {
+              $("#course-list").empty();
+              $("#clear-all-button-div").empty();
+              window.course_list = [];
+            });
+          });
+        }
         $("#course-list").append("<h4>"+course_name+"</h4>");
         window.course_list.push(course_name);
         $("#add-course-text").val('');
+
       }
     });
   });
