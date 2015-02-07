@@ -1,15 +1,17 @@
 from flask import Flask
 from flask import request
 from flask import render_template
-
+import json
+#from flask.ext.pymongo import PyMongo
 import pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
+
 app = Flask(__name__)
 mongo = MongoClient()
 
-db = mongo.course_database2
+db = mongo.course_database6
 courses = db.courses
 
 @app.route('/')
@@ -18,9 +20,10 @@ def index():
 
 @app.route('/', methods=['POST'])
 def my_form_post():
-    course_list = str(request.form['course_list'])
-    entry_id = courses.insert({"course_list" : course_list})
-    return (str(entry_id),200)
+    course_list = request.form['course_list']
+    schedule_hash = hash(frozenset(course_list))
+    courses.insert({"schedule_hash": str(schedule_hash) ,"course_list" : str(course_list)})
+    return (str(schedule_hash),200)
 
 @app.route('/get_schedule')
 def my_form_get():
@@ -29,11 +32,23 @@ def my_form_get():
 
 @app.route('/schedule')
 def show_sch():
-    entry_id = request.args['entry_id']
-    entry = courses.find_one({"_id": ObjectId(entry_id)})
+    schedule_hash = request.args['entry_id']
+    entry = courses.find_one({"schedule_hash": str(schedule_hash)})
     course_stuff = entry['course_list']
     return render_template('schedule_page.html', course_list=course_stuff)
 
+def score(l1, l2):
+    return len((set(l1)).difference(set(l2)))
+
+@app.route('/schedule_search_data', methods=['POST'])
+def search_data():
+    course_list = json.loads(request.form['course_list'])
+    schedules = []
+    for c in courses.find():
+        schedule_score = score(course_list, c['course_list'])
+        schedules.append((schedule_score,c))
+    schedules.sort()
+    return json.dumps([str(s[1]["schedule_hash"]) for s in schedules[:5]])
 
 if __name__ == '__main__':
     app.run(debug=True)
