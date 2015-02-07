@@ -34,7 +34,15 @@
       if (window.course_list.indexOf(course_name) === -1) {
         $("#course-list").append("<h3>"+course_name+"</h3>");
         window.course_list.push(course_name);
+        $("#add-course-text").val('');
       }
+    });
+  });
+  $(function() {
+    $("#add-course-text").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#add-course-button").click();
+    }
     });
   });
   </script>
