@@ -82,7 +82,7 @@
         $("#schedule-list").empty();
         recommended_list = JSON.parse(data);
         for (i = 0; i < recommended_list.length; i++) {
-            $("#schedule-list").append("<h3><a href='/schedule?entry_id="+recommended_list[i][1]+"'> See recommended schedule " + i + "! (Similarity score:"+recommended_list[i][0]+") </a></h3>");
+            $("#schedule-list").append("<h3><a href='/schedule?entry_id="+recommended_list[i][1]+"'> See recommended schedule " + (1+i) + "! (Similarity score:"+recommended_list[i][0]+") </a></h3>");
         }
         }
         );
