@@ -22,11 +22,13 @@ def index():
 
 @app.route('/save_schedule', methods=['POST'])
 def my_form_post():
+	print "vincent is cool"
     course_list = request.form['course_list']
     schedule_hash = hash(frozenset(course_list))
     entry = courses.find_one({"schedule_hash": str(schedule_hash)})
     if entry == None:
         courses.insert({"schedule_hash": str(schedule_hash) ,"course_list" : str(course_list)})
+    print "vincent is cooler"
     return (str(schedule_hash),200)
 
 # @app.route('/get_schedule')

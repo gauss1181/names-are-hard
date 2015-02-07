@@ -79,6 +79,7 @@
     $( "#search-schedule-button" ).click(function() {
       $.post( "/schedule_search_data", {course_list: JSON.stringify(window.course_list)},
         function( data ) {
+        console.log("WOWOW");
         $("#schedule-list").empty();
         recommended_list = JSON.parse(data);
         for (i = 0; i < recommended_list.length; i++) {
