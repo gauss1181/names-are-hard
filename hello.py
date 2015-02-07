@@ -2,7 +2,6 @@ from flask import Flask
 from flask import request
 from flask import render_template
 
-#from flask.ext.pymongo import PyMongo
 import pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
@@ -32,7 +31,8 @@ def my_form_get():
 def show_sch():
     entry_id = request.args['entry_id']
     entry = courses.find_one({"_id": ObjectId(entry_id)})
-    return render_template('schedule_page.html', course_list=entry["course_list"])
+    course_stuff = entry['course_list']
+    return render_template('schedule_page.html', course_list=course_stuff)
 
 
 if __name__ == '__main__':

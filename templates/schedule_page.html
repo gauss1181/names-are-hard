@@ -5,5 +5,12 @@
 {% block body %}
 
 <h1>Schedule</h1>
-<p>Course list: {{course_list}}</p>
+<h3>Course list:</h3><br />
+<script language="javascript">
+    var courses = {{ course_list | safe }};
+    var len = courses.length;
+    for(var i = 0; i < len; i++) {
+        document.write("<p>" + courses[i] + "</p>");
+    }
+</script>
 {% endblock %}
