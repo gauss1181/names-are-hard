@@ -9,7 +9,8 @@ from bson.objectid import ObjectId
 
 
 app = Flask(__name__)
-mongo = MongoClient()
+MONGODB_URI = 'mongodb://vincom2:joelisreallycool@ds041821.mongolab.com:41821/db'
+mongo = MongoClient(MONGODB_URI)
 
 db = mongo.course_database6
 courses = db.courses
