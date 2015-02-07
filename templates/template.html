@@ -17,7 +17,7 @@
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
   <script>
   $(function() {
-    $("#tags").autocomplete({
+    $("#add-course-text").autocomplete({
       source: [
       "15-251: Great Theoretical Ideas in Computer Science",
       "15-122: Introduction to Imperative Programming",
@@ -25,6 +25,11 @@
       "15-410: Operating Systems Design and Implementation",
       "15-411: Compilers"
       ]
+    });
+  });
+  $(function() {
+    $( "#add-course-button" ).click(function() {
+      $("#course-list").append("<h3>"+$("#add-course-text").val()+"</h3>");
     });
   });
   </script>
