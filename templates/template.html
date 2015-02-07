@@ -43,6 +43,8 @@
     if(event.keyCode == 13){
         $("#add-course-button").click();
     }
+    $( "#upload-schedule-button" ).click(function() {
+      $.post( "/", {course_list: JSON.stringify(window.course_list)});
     });
   });
   </script>
