@@ -6,10 +6,11 @@ import json
 import pymongo
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+import os
 
 
 app = Flask(__name__)
-MONGODB_URI = 'mongodb://vincom2:joelisreallycool@ds041821.mongolab.com:41821/db'
+MONGODB_URI = 'mongodb://heroku_app33805027:13pamro94pa8un25vulvqun798@ds041821.mongolab.com:41821/heroku_app33805027'
 mongo = MongoClient(MONGODB_URI)
 
 db = mongo.course_database6
@@ -56,4 +57,5 @@ def search_data():
     return json.dumps([(s[0],str(s[1])) for s in schedules[:5]])
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, port=port)
