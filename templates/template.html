@@ -20,11 +20,18 @@
   $(function() {
     $("#add-course-text").autocomplete({
       source: [
-      "15-251: Great Theoretical Ideas in Computer Science",
+      "15-112: Fundamentals of Programming",
       "15-122: Introduction to Imperative Programming",
       "15-150: Introduction to Functional Programming",
+      "15-251: Great Theoretical Ideas in Computer Science",
+      "15-359: Probability and Computing",
       "15-410: Operating Systems Design and Implementation",
-      "15-411: Compilers"
+      "15-411: Compilers",
+      "21-300: Basic Logic",
+      "21-301: Combinatorics",
+      "21-701: Discrete Mathematics",
+      "21-720: Measure and Integration",
+      "21-721: Probability"
       ]
     });
   });
@@ -75,7 +82,7 @@
         $("#schedule-list").empty();
         recommended_list = JSON.parse(data);
         for (i = 0; i < recommended_list.length; i++) {
-            $("#schedule-list").append("<h3><a href='/schedule?entry_id="+recommended_list[i]+"'> See recommended schedule! </a></h3>");
+            $("#schedule-list").append("<h3><a href='/schedule?entry_id="+recommended_list[i][1]+"'> See recommended schedule " + (1+i) + "! (Similarity score:"+recommended_list[i][0]+") </a></h3>");
         }
         }
         );
