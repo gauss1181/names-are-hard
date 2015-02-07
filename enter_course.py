@@ -23,7 +23,7 @@ def my_form_post():
     processed_text = course_number + ": " + course_name
     course_id = courses.insert({"name" : course_name, "number" : course_number})
 
-    return course_id
+    return render_template('added_course.html', name=course_name, number=course_number)
 
 if __name__ == '__main__':
     app.run()
