@@ -32,7 +32,7 @@
     $( "#add-course-button" ).click(function() {
       course_name = $("#add-course-text").val();
       if (window.course_list.indexOf(course_name) === -1) {
-        $("#course-list").append("<h3>"+course_name+"</h3>");
+        $("#course-list").append("<h4>"+course_name+"</h4>");
         window.course_list.push(course_name);
         $("#add-course-text").val('');
       }
