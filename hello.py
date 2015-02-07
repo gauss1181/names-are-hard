@@ -9,7 +9,8 @@ from bson.objectid import ObjectId
 
 
 app = Flask(__name__)
-mongo = MongoClient()
+MONGODB_URI = 'mongodb://vincom2:joelisreallycool@ds041821.mongolab.com:41821/db'
+mongo = MongoClient(MONGODB_URI)
 
 db = mongo.course_database6
 courses = db.courses
@@ -40,15 +41,16 @@ def show_sch():
     return render_template('schedule_page.html', course_list=course_stuff)
 
 def score(l1, l2):
-    return 100 - (4 * len((set(l1)).difference(set(l2))) + len((set(l1)).symmetric_difference(set(l2))) - 8 * len((set(l1)).intersection(set(l2))))
+    return 100 - 3 * len((set(l1)).symmetric_difference(set(l2))) + 5 * len((set(l1)).intersection(set(l2)))
 
 @app.route('/schedule_search_data', methods=['POST'])
 def search_data():
-    course_list = json.loads(request.form['course_list'])
+    course_list = map(unicode,json.loads(request.form['course_list']))
     schedules_set = set([])
     for c in courses.find():
-        schedule_score = score(course_list, c['course_list'])
-        if set(course_list) != set(c['course_list']):
+        curr_list = map(unicode,json.loads(c['course_list']))
+        schedule_score = score(course_list, curr_list)
+        if set(course_list) != set(curr_list):
             schedules_set.add((schedule_score,c["schedule_hash"]))
     schedules = sorted(list(schedules_set), reverse=True)
     return json.dumps([(s[0],str(s[1])) for s in schedules[:5]])
