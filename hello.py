@@ -12,7 +12,7 @@ import os
 app = Flask(__name__)
 MONGODB_URI = 'mongodb://heroku_app33805027:13pamro94pa8un25vulvqun798@ds041821.mongolab.com:41821/heroku_app33805027'
 mongo = MongoClient(MONGODB_URI)
-
+# mongo = MongoClient()
 db = mongo.course_database6
 courses = db.courses
 
@@ -29,10 +29,10 @@ def my_form_post():
         courses.insert({"schedule_hash": str(schedule_hash) ,"course_list" : str(course_list)})
     return (str(schedule_hash),200)
 
-@app.route('/get_schedule')
-def my_form_get():
-    ans = ".<br>\n".join([str(c) for c in courses.find()])
-    return (ans, 200)
+# @app.route('/get_schedule')
+# def my_form_get():
+#     ans = ".<br>\n".join([str(c) for c in courses.find()])
+#     return (ans, 200)
 
 @app.route('/schedule')
 def show_sch():
