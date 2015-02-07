@@ -1,3 +1,11 @@
+@mixin vertical-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
 html,body {
   height:100%;
 }
@@ -31,4 +39,9 @@ h1 {
 .v-center {
   margin-top:7%;
 }
-  
+
+#disqus_thread {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
