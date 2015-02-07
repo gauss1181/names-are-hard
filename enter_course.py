@@ -7,6 +7,7 @@ import pymongo
 from pymongo import MongoClient
 
 app = Flask(__name__)
+DEBUG = True
 mongo = MongoClient()
 
 db = mongo.course_database
@@ -24,6 +25,14 @@ def my_form_post():
     course_id = courses.insert({"name" : course_name, "number" : course_number})
 
     return render_template('added_course.html', name=course_name, number=course_number)
+
+@app.route('/show_schedule')
+def show_schedule_link():
+    print "here we are"
+    course_list = list(courses.find())
+    print "and there we are"
+
+    return render_template('display_courses.html', course_list=course_list)
 
 if __name__ == '__main__':
     app.run()

@@ -1,0 +1,12 @@
+<html>
+<head>
+    <title>List of courses in your schedule</title>
+</head>
+<body>
+    {% for c in course_list %}
+    <script language="JavaScript">
+        document.write({{ c['number'] | tojson | safe }} + " : " + {{ c['name'] | tojson | safe }});
+    </script>
+    {% endfor %}
+</body>
+</html>
