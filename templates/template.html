@@ -16,6 +16,7 @@
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
   <script>
+  window.course_list = [];
   $(function() {
     $("#add-course-text").autocomplete({
       source: [
@@ -29,7 +30,11 @@
   });
   $(function() {
     $( "#add-course-button" ).click(function() {
-      $("#course-list").append("<h3>"+$("#add-course-text").val()+"</h3>");
+      course_name = $("#add-course-text").val();
+      if (window.course_list.indexOf(course_name) === -1) {
+        $("#course-list").append("<h3>"+course_name+"</h3>");
+        window.course_list.push(course_name);
+      }
     });
   });
   </script>
