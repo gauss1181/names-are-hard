@@ -20,7 +20,7 @@ courses = db.courses
 def index():
     return render_template('index.html')
 
-@app.route('/', methods=['POST'])
+@app.route('/save_schedule', methods=['POST'])
 def my_form_post():
     course_list = request.form['course_list']
     schedule_hash = hash(frozenset(course_list))
