@@ -47,7 +47,11 @@
   });
   $(function() {
     $( "#upload-schedule-button" ).click(function() {
-      $.post( "/", {course_list: JSON.stringify(window.course_list)});
+      $.post( "/", {course_list: JSON.stringify(window.course_list)},
+        function( data ) {
+        $("#schedule-link").append("<h3><a href='/schedule?entry_id="+data+"'> See your schedule! </a></h3>");
+        }
+        );
     });
   });
   </script>

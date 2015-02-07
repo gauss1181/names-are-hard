@@ -5,6 +5,7 @@ from flask import render_template
 #from flask.ext.pymongo import PyMongo
 import pymongo
 from pymongo import MongoClient
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 mongo = MongoClient()
@@ -19,13 +20,20 @@ def index():
 @app.route('/', methods=['POST'])
 def my_form_post():
     course_list = str(request.form['course_list'])
-    course_id = courses.insert({"course_list" : course_list})
-    return ('',200)
+    entry_id = courses.insert({"course_list" : course_list})
+    return (str(entry_id),200)
 
 @app.route('/get_schedule')
 def my_form_get():
-    ans = ".<br>\n".join([c["course_list"] for c in courses.find()])
+    ans = ".<br>\n".join([str(c) for c in courses.find()])
     return (ans, 200)
+
+@app.route('/schedule')
+def show_sch():
+    entry_id = request.args['entry_id']
+    entry = courses.find_one({"_id": ObjectId(entry_id)})
+    return render_template('schedule_page.html', course_list=entry["course_list"])
+
 
 if __name__ == '__main__':
     app.run(debug=True)
