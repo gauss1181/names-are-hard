@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Landing Page template</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="{{ url_for('static', filename='styles/bootstrap.min.css') }}" rel="stylesheet">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <link href="{{ url_for('static', filename='styles/styles.css') }}" rel="stylesheet">
+  <script>
+  window.course_list = [];
+  $(function() {
+    $("#add-course-text").autocomplete({
+      source: [
+      "15-251: Great Theoretical Ideas in Computer Science",
+      "15-122: Introduction to Imperative Programming",
+      "15-150: Introduction to Functional Programming",
+      "15-410: Operating Systems Design and Implementation",
+      "15-411: Compilers"
+      ]
+    });
+  });
+  $(function() {
+    $( "#add-course-button" ).click(function() {
+      course_name = $("#add-course-text").val();
+      if (window.course_list.indexOf(course_name) === -1) {
+        if (window.course_list.length === 0) {
+          $("#clear-all-button-div").append('<button type="button" class="btn btn-default" id="clear-all-button">Clear All</button>');
+
+          $(function() {
+            $( "#clear-all-button" ).click(function() {
+              $("#course-list").empty();
+              $("#clear-all-button-div").empty();
+              window.course_list = [];
+            });
+          });
+        }
+        $("#course-list").append("<h4>"+course_name+"</h4>");
+        window.course_list.push(course_name);
+        $("#add-course-text").val('');
+
+      }
+    });
+  });
+  $(function() {
+    $("#add-course-text").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#add-course-button").click();
+    }
+    });
+  });
+  $(function() {
+    $( "#upload-schedule-button" ).click(function() {
+      $.post( "/", {course_list: JSON.stringify(window.course_list)},
+        function( data ) {
+        $("#schedule-link").append("<h3><a href='/schedule?entry_id="+data+"'> See your schedule! </a></h3>");
+        }
+        );
+    });
+  });
+  </script>
+	</head>
+	<body>
+<div id="fb-root"></div>
+<script>(  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1550489265226536',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1550489265226536&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div
+  class="fb-like"
+  data-href="http://facebook.com/CDanArt"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
+<div class="container-full">
+
+      <div class="row">
+       
+        <div class="col-lg-12 text-center v-center">
+          {% block body %}{% endblock %}
+        </div>
+        
+      </div> <!-- /row -->
+  
+      
+      </div>
+  
+  	<br><br><br><br><br>
+
+</div>
+		<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	</body>
+</html>
